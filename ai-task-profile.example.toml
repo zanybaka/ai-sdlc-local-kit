@@ -1,0 +1,18 @@
+# Operator settings for ai-task.
+#
+# Copy this file to ai-task-profile.local.toml in the same folder. The local copy
+# is gitignored: which remotes are yours is your data, not the profile's.
+# AI_TASK_PROFILE_CONFIG may point at a file elsewhere instead.
+
+# Repositories you own. `ai-task init` compares the origin remote of a repository,
+# written as host/owner/repo, against these glob patterns. A pattern without a
+# wildcard covers everything below it, so "github.com/your-name" means every
+# repository of that owner.
+#
+# In a repository that matches, init behaves as before: tracking .ai-task/config.toml
+# and policies/ is your choice. In any other repository, and when this list is
+# missing, init puts /.ai-task/ into .git/info/exclude, which is local and never
+# committed, so your tooling stays out of someone else's history.
+own_remotes = [
+  "github.com/your-name",
+]

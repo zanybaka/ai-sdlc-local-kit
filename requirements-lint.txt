@@ -1,0 +1,5 @@
+# The pinned linter. Ruff's default rule set changes between releases, so an
+# unpinned binary makes the finding count depend on whoever ran it last. This
+# file is the single pin: scripts/lint.sh reads the version from here, and the
+# rule set it enforces is stated in ruff.toml.
+ruff==0.16.1

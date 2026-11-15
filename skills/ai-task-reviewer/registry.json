@@ -1,0 +1,97 @@
+{
+  "version": 1,
+  "stacks": {
+    "python": {
+      "skills": ["modern-python", "py-security"],
+      "optional": true,
+      "path_suffixes": [".py"],
+      "repo_markers": ["pyproject.toml", "requirements.txt", "ruff.toml"],
+      "context_keywords": ["python", "pytest", "ruff", "django", "fastapi", "pyproject"]
+    },
+    "qt-cpp": {
+      "skills": ["qt-cpp-review"],
+      "path_suffixes": [".cpp", ".h", ".hpp", ".cc", ".cxx"],
+      "context_keywords": ["qt widgets", "qwidget", "pyside6", "pyqt", "qt c++"]
+    },
+    "qt-qml": {
+      "skills": ["qt-qml-review"],
+      "path_suffixes": [".qml"],
+      "context_keywords": ["qml", "qt quick", "qtquick"]
+    },
+    "swift": {
+      "skills": ["engineering:code-review"],
+      "path_suffixes": [".swift"],
+      "repo_markers": ["Package.swift", "*.xcodeproj", "*.xcworkspace"],
+      "context_keywords": ["swift", "swiftui", "appkit", "xcode", "xctest"]
+    },
+    "dotnet": {
+      "skills": ["engineering:code-review"],
+      "path_suffixes": [".cs", ".csproj", ".fs", ".vb", ".sln"],
+      "repo_markers": ["*.csproj", "*.sln"],
+      "context_keywords": ["dotnet", ".net", "c#", "csharp", "asp.net"]
+    },
+    "javascript": {
+      "skills": ["engineering:code-review"],
+      "path_suffixes": [".js", ".mjs", ".cjs"],
+      "repo_markers": ["package.json"],
+      "context_keywords": ["javascript", "node", "npm", "webpack", "vite"]
+    },
+    "typescript": {
+      "skills": ["engineering:code-review"],
+      "path_suffixes": [".ts", ".tsx"],
+      "repo_markers": ["tsconfig.json"],
+      "context_keywords": ["typescript", "tsx", "nestjs"]
+    },
+    "go": {
+      "skills": ["engineering:code-review"],
+      "path_suffixes": [".go"],
+      "repo_markers": ["go.mod"],
+      "context_keywords": ["golang", " go ", "grpc", " gin "]
+    },
+    "docker": {
+      "skills": ["engineering:code-review", "sdlc-contract-guard"],
+      "path_suffixes": ["dockerfile", ".dockerignore", "docker-compose.yml", "compose.yaml"],
+      "repo_markers": ["Dockerfile", "docker-compose.yml", "compose.yaml"],
+      "context_keywords": ["docker", "container image"]
+    },
+    "terraform": {
+      "skills": ["engineering:code-review", "sdlc-contract-guard"],
+      "path_suffixes": [".tf", ".tfvars"],
+      "repo_markers": ["*.tf"],
+      "context_keywords": ["terraform", "tfvars"]
+    },
+    "helm": {
+      "skills": ["engineering:code-review", "sdlc-contract-guard"],
+      "path_suffixes": ["chart.yaml", "values.yaml"],
+      "repo_markers": ["Chart.yaml"],
+      "context_keywords": ["helm chart", " helm ", "kubernetes", "k8s"]
+    },
+    "sql": {
+      "skills": ["sdlc-contract-guard"],
+      "path_suffixes": [".sql"],
+      "context_keywords": ["sql", "ddl"]
+    }
+  },
+  "conditional_skills": [
+    {
+      "skill": "sdlc-contract-guard",
+      "when": "review_gates_or_contract_keywords"
+    },
+    {
+      "skill": "playwright-skill",
+      "when": "web_ui_task_context"
+    },
+    {
+      "skill": "security-review",
+      "when": "web_auth_infra_security_keywords_or_image_manifest_paths"
+    },
+    {
+      "skill": "qt-ui-design",
+      "when": "qt_ui_paths_or_keywords"
+    },
+    {
+      "skill": "dev-web-ui-design",
+      "when": "web_ui_paths_or_keywords"
+    }
+  ]
+}

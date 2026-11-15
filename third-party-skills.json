@@ -1,0 +1,70 @@
+{
+  "packs": [
+    {
+      "path": "third_party/python-refactoring-skills",
+      "repo": "https://github.com/l-mb/python-refactoring-skills"
+    },
+    {
+      "path": "third_party/streamlit-agent-skills",
+      "repo": "https://github.com/streamlit/agent-skills"
+    },
+    {
+      "path": "third_party/qt-agent-skills",
+      "repo": "https://github.com/TheQtCompanyRnD/agent-skills"
+    },
+    {
+      "path": "third_party/trailofbits-skills",
+      "repo": "https://github.com/trailofbits/skills",
+      "skillPaths": [
+        "plugins/modern-python/skills/modern-python"
+      ]
+    },
+    {
+      "path": "third_party/skill-deep-dive",
+      "repo": "https://github.com/davethegut/cursor-skill-deep-dive",
+      "skillPaths": [
+        {
+          "path": ".",
+          "name": "skill-deep-dive"
+        }
+      ]
+    },
+    {
+      "path": "third_party/adr-skill",
+      "repo": "https://github.com/skillrecordings/adr-skill",
+      "skillPaths": [
+        "skills/adr-skill"
+      ]
+    },
+    {
+      "path": "third_party/playwright-skill",
+      "repo": "https://github.com/lackeyjb/playwright-skill"
+    },
+    {
+      "path": "third_party/context-engineering-kit",
+      "repo": "https://github.com/NeoLabHQ/context-engineering-kit",
+      "skillPaths": [
+        "plugins/kaizen/skills/kaizen"
+      ]
+    },
+    {
+      "path": "third_party/claude-lessons-learned",
+      "repo": "https://github.com/aplaceforallmystuff/claude-lessons-learned"
+    }
+  ],
+  "installers": [
+    {
+      "name": "gradio",
+      "requires": "gradio",
+      "pythonPackage": "gradio",
+      "dest": "third_party/gradio-skills/.agents/skills",
+      "command": [
+        "gradio",
+        "skills",
+        "add",
+        "--dest",
+        "third_party/gradio-skills/.agents/skills"
+      ]
+    }
+  ]
+}

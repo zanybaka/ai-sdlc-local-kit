@@ -1,0 +1,26 @@
+# Identity-guard denylist (TEMPLATE — placeholders only).
+#
+# Copy this file to the operator-local, NEVER-committed real denylist and add
+# the real identity strings you want the global pre-push guard to block on a
+# push to any github.com remote (real corporate email, corporate domain,
+# corporate username):
+#
+#   cp scripts/git-hooks/identity-denylist.example.txt \
+#      ~/.config/git/identity-denylist.txt
+#   # then edit ~/.config/git/identity-denylist.txt and add your REAL patterns
+#
+# scripts/install-identity-guard.sh does this seeding for you if the real file
+# is absent. The real file lives ONLY at ~/.config/git/identity-denylist.txt
+# (outside this repo) and is NEVER committed — committing it would re-leak the
+# very strings it exists to catch.
+#
+# Format: one fixed identity string per line. Blank lines and lines starting
+# with `#` are ignored. Strings are matched literally (git grep -F).
+#
+# Tip: instead of your corporate identity, author public work with your public
+# GitHub handle so there is nothing to leak.
+#
+# Placeholders — replace with your REAL values locally:
+you@corp-domain.example
+corp-domain.example
+your-corp-username

@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+.ai-task/
+# The canon AGENTS.md copy in a project root is local, never committed.
+/AGENTS.md
+# Third-party skill packs are pulled by scripts/sync-third-party-skills.sh.
+third_party/
+# Operator-local settings; the .example templates stay tracked.
+/ai-task-profile.local.toml
+/scripts/git-hooks/identity-denylist.local
+# Skills the Claude desktop app syncs into ~/.claude/skills/synced/.
+/skills/synced/
+# Decks built by scripts/build-decks.sh.
+/.deck-build/
+/docs/*.pptx
+/docs/*.pdf

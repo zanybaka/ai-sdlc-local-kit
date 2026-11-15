@@ -1,0 +1,88 @@
+# Lint repo-owned Python only.
+#
+# third_party/ is synced verbatim from upstream (third-party-skills.json /
+# scripts/sync-third-party-skills.sh) and must not be edited or gated here.
+# skills/qt-cpp-review and skills/qt-qml-review are the same upstream bytes
+# reached by a second path: they are committed copies rather than the usual
+# symlink, because scripts/link-third-party-skills.sh refuses to replace a real
+# directory. Excluding them is the same decision for the same reason.
+# tests/test_ruff_config.py fails when an installed copy is not covered here,
+# so the next synced pack cannot quietly re-add a hundred findings.
+extend-exclude = [
+  "third_party",
+  "skills/qt-cpp-review",
+  "skills/qt-qml-review",
+]
+# Keep the exclusion even when paths are passed explicitly (editor/hook integrations).
+force-exclude = true
+# State the language level too. Ruff infers a default when this is unset, and the
+# UP rules and zip(strict=) depend on it, so the same commit could otherwise be
+# judged differently on two machines.
+target-version = "py310"
+
+[lint]
+# State the rule set. Without an explicit select the enabled rules are whatever
+# the installed ruff happens to default to (0.16.1 enables 413 of 968), so the
+# finding count re-rolls on every upgrade and no earlier baseline is comparable.
+# The ruff version is pinned in requirements-lint.txt and read by scripts/lint.sh.
+#
+# The set is picked for what this repo is: automation scripts, git hooks and
+# tests. Rules that catch defects are in. Rules that score style are out, named
+# here so the omissions are decisions rather than oversights: E501 line length
+# and the E1/E2/E3 whitespace rules (formatter territory), PLR complexity
+# metrics, TRY003 message length, PLC0415 import placement, and the flake8-bandit
+# rules that fire on every subprocess call this repo exists to make.
+select = [
+  "F",              # pyflakes: undefined names, unused imports, real errors
+  "E4", "E7", "E9", # pycodestyle errors worth failing on
+  "W",              # pycodestyle warnings
+  "I",              # import order
+  "UP",             # pyupgrade
+  "B",              # bugbear
+  "C4",             # comprehensions
+  "SIM",            # simplify
+  "PIE",
+  "ISC",            # implicit string concatenation
+  "DTZ",            # naive datetime
+  "EXE",            # shebang and exec bit agree
+  "RUF",            # ruff-specific, including RUF100 (unused noqa)
+  "BLE",            # blind except
+  "PLE", "PLW",     # pylint errors and warnings
+  # The two flake8-bandit rules this repo needs: a swallowed error and an
+  # unaudited URL scheme. The rest of S fires on every subprocess call.
+  "S110", "S310",
+  "TRY004", "TRY301",
+]
+ignore = [
+  # The repo is bilingual on purpose. Russian text in strings, docstrings and
+  # comments is content, not a homoglyph attack.
+  "RUF001", "RUF002", "RUF003",
+  # contextlib.suppress instead of try/except/pass is a style preference, and
+  # the explicit form is the one the S110 audit above actually reads.
+  "SIM105",
+  # A ternary is not clearer than the if/else it would replace here.
+  "SIM108",
+]
+
+[lint.per-file-ignores]
+# These entrypoints resolve a checkout root or extend sys.path before importing
+# the package that lives next to them, so their imports cannot all sit at the top.
+"scripts/ai_task/cli.py" = ["E402"]
+"scripts/analytics.py" = ["E402", "F403"]
+"scripts/backlog-store.py" = ["E402"]
+"tests/test_backlog_store.py" = ["E402"]
+"tests/test_backlog_store_add.py" = ["E402"]
+# A failing notification, telemetry write or scenario probe must not break
+# delivery, so these files catch broadly on purpose. The bare try/except/pass
+# cases inside them are narrower and carry their own noqa with a reason.
+"hooks/telegram-notify.py" = ["BLE001"]
+"scripts/ai-task-quota-statusline.py" = ["BLE001"]
+"scripts/ai_task/lifecycle.py" = ["BLE001"]
+"scripts/ai_task/notify.py" = ["BLE001"]
+"scripts/run-scenario-matrix.py" = ["BLE001"]
+# Module-level caches and one-shot warning flags, written once and read many times.
+"scripts/ai_task/decisions.py" = ["PLW0603"]
+"scripts/ai_task/state.py" = ["PLW0603"]
+"tests/test_cli.py" = ["PLW0603"]
+# Nested with-statements in fixture setup read better than one combined header.
+"tests/test_unit.py" = ["SIM117"]
